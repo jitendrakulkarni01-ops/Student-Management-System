@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -19,6 +20,10 @@ def home(request):
             name=name,
             age=age,
             course=course
+        )
+        messages.success(
+            request,
+            "Student Added Successfully !!"
         )
 
         return redirect('/')
@@ -44,6 +49,11 @@ def delete_student(request, id):
 
     student.delete()
 
+    messages.success(
+        request,
+        "Student Delete Successfully !!"
+    )
+
     return redirect('/')
 
 def edit_student(request, id):
@@ -57,6 +67,11 @@ def edit_student(request, id):
          student.course = request.POST.get("course")
 
          student.save()
+
+         messages.success(
+             request,
+             "Student Update Successfully !!"
+         )
 
          return redirect('/')
 
